@@ -43,6 +43,7 @@ class MainActivity : ComponentActivity() {
                             onProfileClick = {
                                 navController.navigate("Profile")
                                 getPersonalPosts()
+                                getPersonalStories()
                             }
                         )
                     }
@@ -54,6 +55,7 @@ class MainActivity : ComponentActivity() {
                             onHomeClick = {
                                 navController.popBackStack()
                                 getPosts()
+                                getStories()
                             }
                         )
                     }
@@ -73,6 +75,10 @@ class MainActivity : ComponentActivity() {
 
     private fun getStories() {
         storiesViewModel.getStories()
+    }
+
+    private fun getPersonalStories() {
+        storiesViewModel.getPersonalStories()
     }
 }
 

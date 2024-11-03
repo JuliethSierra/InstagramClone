@@ -3,9 +3,11 @@ package com.example.instagramclonecompose.presentation.ui.screens.profile
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.foundation.lazy.grid.items
+import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.BottomNavigation
@@ -25,11 +27,14 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.instagramclonecompose.R
 import com.example.instagramclonecompose.model.Post
+import com.example.instagramclonecompose.model.Stories
 import com.example.instagramclonecompose.perentation.ui.screens.home.uistate.PostUIState
 import com.example.instagramclonecompose.perentation.ui.screens.home.uistate.StoriesUIState
 
 @Composable
-fun ProfileScreen(postModelUIState: State<PostUIState>, storiesUIState: State<StoriesUIState>,
+fun ProfileScreen(
+    postModelUIState: State<PostUIState>,
+    storiesUIState: State<StoriesUIState>,
     onHomeClick: () -> Unit
 ) {
     Scaffold(
@@ -41,7 +46,6 @@ fun ProfileScreen(postModelUIState: State<PostUIState>, storiesUIState: State<St
             modifier = Modifier
                 .fillMaxSize()
                 .padding(paddingValues)
-
                 .background(Color.Black)
         ) {
             ProfileHeader()
@@ -50,7 +54,12 @@ fun ProfileScreen(postModelUIState: State<PostUIState>, storiesUIState: State<St
             Spacer(modifier = Modifier.height(16.dp))
             ProfileActions()
             Spacer(modifier = Modifier.height(16.dp))
-            ProfilePhotosGrid(postModelUIState)
+
+            // Agregar StoriesRow aquí antes del grid de fotos
+            StoriesRow(storiesUIState = storiesUIState)
+
+            Spacer(modifier = Modifier.height(16.dp))
+            ProfilePhotosGrid(postModelUIState = postModelUIState)
         }
     }
 }
@@ -292,6 +301,47 @@ fun ProfileActions() {
                 tint = Color.White
             )
         }
+    }
+}
+
+@Composable
+fun StoriesRow(storiesUIState: State<StoriesUIState>) {
+    LazyRow(modifier = Modifier.padding(vertical = 8.dp)) {
+        items(storiesUIState.value.stories) { story ->
+            StoriesItem(story)
+        }
+    }
+}
+
+@Composable
+fun StoriesItem(story: Stories) {
+    Row(
+        modifier = Modifier.padding(10.dp), // Margen a la derecha entre historias
+        verticalAlignment = Alignment.CenterVertically // Alinear elementos verticalmente
+    ) {
+        Column(
+            horizontalAlignment = Alignment.CenterHorizontally // Centrar el contenido dentro de la columna
+        ) {
+            Box(
+                modifier = Modifier
+                    .size(80.dp)
+                    .clip(CircleShape)
+                    .background(Color.Gray)
+            ) {
+                Image(
+                    painter = painterResource(id = story.profileImage),
+                    contentDescription = "Profile",
+                    modifier = Modifier.fillMaxSize(),
+                    contentScale = ContentScale.Crop
+                )
+            }
+            androidx.compose.material.Text(
+                text = story.username, // Muestra el nombre de la historia
+                color = Color.White, // Ajusta el color del texto
+                modifier = Modifier.padding(8.dp) // Margen superior entre la imagen y el texto
+            )
+        }
+
     }
 }
 

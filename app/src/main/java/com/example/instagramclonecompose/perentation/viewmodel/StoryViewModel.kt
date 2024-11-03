@@ -85,6 +85,76 @@ class StoryViewModel : ViewModel(){
                 isHighlightStory = false
             )
         )
+        storiesList.add(
+            Stories(
+                username = "♥️",
+                profileImage = R.drawable.highlight_story1,
+                isHighlightStory = true
+            )
+        )
+        storiesList.add(
+            Stories(
+                username = "☀️",
+                profileImage = R.drawable.highlight_story2,
+                isHighlightStory = true
+            )
+        )
+        storiesList.add(
+            Stories(
+                username = "💎",
+                profileImage = R.drawable.highlight_story6,
+                isHighlightStory = true
+            )
+        )
+        storiesList.add(
+            Stories(
+                username = "💜",
+                profileImage = R.drawable.highlight_story5,
+                isHighlightStory = true
+            )
+        )
+        storiesList.add(
+            Stories(
+                username = "👨‍👩‍👧‍👦",
+                profileImage = R.drawable.highlight_story4,
+                isHighlightStory = true
+            )
+        )
+        storiesList.add(
+            Stories(
+                username = "😊",
+                profileImage = R.drawable.highlight_story3,
+                isHighlightStory = true
+            )
+        )
+        storiesList.add(
+            Stories(
+                username = "🌟",
+                profileImage = R.drawable.highlight_story7,
+                isHighlightStory = true
+            )
+        )
+        storiesList.add(
+            Stories(
+                username = "🎓",
+                profileImage = R.drawable.highlight_story9,
+                isHighlightStory = true
+            )
+        )
+        storiesList.add(
+            Stories(
+                username = "✨",
+                profileImage = R.drawable.highlight_story10,
+                isHighlightStory = true
+            )
+        )
+        storiesList.add(
+            Stories(
+                username = "🏀",
+                profileImage = R.drawable.highlight_story8,
+                isHighlightStory = true
+            )
+        )
     }
 
     fun getStories() {
