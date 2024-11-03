@@ -24,10 +24,10 @@ import com.example.instagramclonecompose.perentation.ui.screens.home.uistate.Pos
 import com.example.instagramclonecompose.perentation.ui.screens.home.uistate.StoriesUIState
 
 @Composable
-fun HomeScreen(postModelUIState: State<PostUIState>, storiesUIState: State<StoriesUIState>) {
+fun HomeScreen(postModelUIState: State<PostUIState>, storiesUIState: State<StoriesUIState>, onProfileClick: () -> Unit) {
     Scaffold(
         topBar = { InstagramTopBar() },
-        bottomBar = { InstagramBottomBar() },
+        bottomBar = { InstagramBottomBar(onProfileClick) },
         modifier = Modifier.background(Color.Black)
     ) { padding ->
         LazyColumn(
@@ -89,7 +89,7 @@ fun InstagramTopBar() {
 
 
 @Composable
-fun InstagramBottomBar() {
+fun InstagramBottomBar(onProfileClick: () -> Unit) {
     BottomNavigation(
         backgroundColor = Color.Black,
         contentColor = Color.White
@@ -151,7 +151,7 @@ fun InstagramBottomBar() {
                         .background(Color.Gray)
                 ) {
                     Image(
-                        painter = painterResource(id = R.drawable.media_photo),
+                        painter = painterResource(id = R.drawable.profile_image),
                         contentDescription = "Profile",
                         modifier = Modifier.fillMaxSize(),
                         contentScale = ContentScale.Crop
@@ -159,7 +159,7 @@ fun InstagramBottomBar() {
                 }
             },
             selected = false,
-            onClick = { /* Navegar a Perfil */ }
+            onClick = onProfileClick
         )
 
 
@@ -191,7 +191,7 @@ fun StoriesItem(story: Stories) {
                     .background(Color.Gray)
             ) {
                 Image(
-                    painter = painterResource(id = R.drawable.media_photo),
+                    painter = painterResource(id = story.profileImage),
                     contentDescription = "Profile",
                     modifier = Modifier.fillMaxSize(),
                     contentScale = ContentScale.Crop
@@ -203,6 +203,7 @@ fun StoriesItem(story: Stories) {
                 modifier = Modifier.padding(8.dp) // Margen superior entre la imagen y el texto
             )
         }
+
     }
 }
 
@@ -217,7 +218,7 @@ fun PostItem(post: Post) {
     ) {
         Row(verticalAlignment = Alignment.CenterVertically) {
             Image(
-                painter = painterResource(id = R.drawable.media_photo),
+                painter = painterResource(id = post.profileImage),
                 contentDescription = "Profile Picture",
                 modifier = Modifier
                     .size(40.dp)
@@ -226,7 +227,7 @@ fun PostItem(post: Post) {
             )
             Text(
                 text = post.username,
-                color = Color.White, // Texto en blanco
+                color = Color.White,
                 modifier = Modifier.padding(start = 8.dp),
             )
             Spacer(modifier = Modifier.weight(1f))
@@ -245,7 +246,7 @@ fun PostItem(post: Post) {
         Spacer(modifier = Modifier.height(8.dp))
 
         Image(
-            painter = painterResource(id = R.drawable.media_photo),
+            painter = painterResource(id = post.imageUrl),
             contentDescription = "Post Image",
             modifier = Modifier
                 .fillMaxWidth()

@@ -25,40 +25,40 @@ class PostViewModel : ViewModel(){
         postList.add(
             Post(
                 username = "User 0",
-                profileImageUrl = R.drawable.media_photo,
-                imageUrl = R.drawable.media_photo,
+                profileImage = R.drawable.espectador_image,
+                imageUrl = R.drawable.post_espectador1,
                 description = "Descripción de la publicación 0"
             )
         )
         postList.add(
             Post(
                 username = "User 1",
-                profileImageUrl = R.drawable.media_photo,
-                imageUrl = R.drawable.media_photo,
+                profileImage = R.drawable.espectador_image,
+                imageUrl = R.drawable.post_espectador2,
                 description = "Descripción de la publicación 1"
             )
         )
         postList.add(
             Post(
                 username = "User 2",
-                profileImageUrl = R.drawable.media_photo,
-                imageUrl = R.drawable.media_photo,
+                profileImage = R.drawable.netflix_image,
+                imageUrl = R.drawable.post_netflix1,
                 description = "Descripción de la publicación 2"
             )
         )
         postList.add(
             Post(
                 username = "User 3",
-                profileImageUrl = R.drawable.media_photo,
-                imageUrl = R.drawable.media_photo,
+                profileImage = R.drawable.netflix_image,
+                imageUrl = R.drawable.post_netflix2,
                 description = "Descripción de la publicación 3"
             )
         )
         postList.add(
             Post(
                 username = "User 4",
-                profileImageUrl = R.drawable.media_photo,
-                imageUrl = R.drawable.media_photo,
+                profileImage = R.drawable.jbalvin_image,
+                imageUrl = R.drawable.post_jbalvin1,
                 description = "Descripción de la publicación 4"
             )
         )

@@ -24,56 +24,56 @@ class StoryViewModel : ViewModel(){
     private fun fillPostList() {
         storiesList.add(
             Stories(
-                username = "User 0",
-                profileImageUrl = R.drawable.media_photo,
+                username = "Andrea Sierra",
+                profileImage = R.drawable.profile_image,
             )
         )
         storiesList.add(
             Stories(
-                username = "User 1",
-                profileImageUrl = R.drawable.media_photo,
+                username = "Greeicy",
+                 profileImage = R.drawable.greeicy_image,
             )
         )
         storiesList.add(
             Stories(
-                username = "User 2",
-                profileImageUrl = R.drawable.media_photo,
+                username = "Ariana",
+                profileImage = R.drawable.ariana_image,
             )
         )
         storiesList.add(
             Stories(
-                username = "User 3",
-                profileImageUrl = R.drawable.media_photo,
+                username = "Netflix",
+                profileImage = R.drawable.netflix_image,
             )
         )
         storiesList.add(
             Stories(
-                username = "User 4",
-                profileImageUrl = R.drawable.media_photo,
+                username = "Juanda",
+                profileImage = R.drawable.juanda_image,
             )
         )
         storiesList.add(
             Stories(
-                username = "User 5",
-                profileImageUrl = R.drawable.media_photo,
+                username = "Espectador",
+                profileImage = R.drawable.espectador_image,
             )
         )
         storiesList.add(
             Stories(
-                username = "User 6",
-                profileImageUrl = R.drawable.media_photo,
+                username = "shashapieterse",
+                profileImage = R.drawable.sashapieterse_image,
             )
         )
         storiesList.add(
             Stories(
-                username = "User 7",
-                profileImageUrl = R.drawable.media_photo,
+                username = "J Balvin",
+                profileImage = R.drawable.jbalvin_image,
             )
         )
         storiesList.add(
             Stories(
-                username = "User 8",
-                profileImageUrl = R.drawable.media_photo,
+                username = "Barbara",
+                profileImage = R.drawable.barbara_image,
             )
         )
     }
