@@ -42,14 +42,18 @@ class MainActivity : ComponentActivity() {
                             storiesUIState = storiesState,
                             onProfileClick = {
                                 navController.navigate("Profile")
+                                getPersonalPosts()
                             }
                         )
                     }
 
                     composable("Profile") {
                         ProfileScreen(
+                            postModelUIState = postsState,
+                            storiesUIState = storiesState,
                             onHomeClick = {
                                 navController.popBackStack()
+                                getPosts()
                             }
                         )
                     }
@@ -61,6 +65,10 @@ class MainActivity : ComponentActivity() {
 
     private fun getPosts() {
         postViewModel.getPosts()
+    }
+
+    private fun getPersonalPosts() {
+        postViewModel.getPersonalPosts()
     }
 
     private fun getStories() {

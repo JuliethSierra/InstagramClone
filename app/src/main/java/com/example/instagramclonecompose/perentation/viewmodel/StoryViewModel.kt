@@ -26,61 +26,76 @@ class StoryViewModel : ViewModel(){
             Stories(
                 username = "Andrea Sierra",
                 profileImage = R.drawable.profile_image,
+                isHighlightStory = false
             )
         )
         storiesList.add(
             Stories(
                 username = "Greeicy",
                  profileImage = R.drawable.greeicy_image,
+                isHighlightStory = false
             )
         )
         storiesList.add(
             Stories(
                 username = "Ariana",
                 profileImage = R.drawable.ariana_image,
+                isHighlightStory = false
             )
         )
         storiesList.add(
             Stories(
                 username = "Netflix",
                 profileImage = R.drawable.netflix_image,
+                isHighlightStory = false
             )
         )
         storiesList.add(
             Stories(
                 username = "Juanda",
                 profileImage = R.drawable.juanda_image,
+                isHighlightStory = false
             )
         )
         storiesList.add(
             Stories(
                 username = "Espectador",
                 profileImage = R.drawable.espectador_image,
+                isHighlightStory = false
             )
         )
         storiesList.add(
             Stories(
                 username = "shashapieterse",
                 profileImage = R.drawable.sashapieterse_image,
+                isHighlightStory = false
             )
         )
         storiesList.add(
             Stories(
                 username = "J Balvin",
                 profileImage = R.drawable.jbalvin_image,
+                isHighlightStory = false
             )
         )
         storiesList.add(
             Stories(
                 username = "Barbara",
                 profileImage = R.drawable.barbara_image,
+                isHighlightStory = false
             )
         )
     }
 
     fun getStories() {
         _uiState.value = _uiState.value.copy(
-            stories = storiesList
+            stories = storiesList.filter { !it.isHighlightStory }
+        )
+    }
+
+    fun getPersonalStories() {
+        _uiState.value = _uiState.value.copy(
+            stories = storiesList.filter { it.isHighlightStory }
         )
     }
 }

@@ -4,5 +4,6 @@ data class Post(
     val username: String,
     val profileImage: Int,
     val imageUrl: Int,
-    val description: String
+    val description: String,
+    val isMyPost: Boolean
 )

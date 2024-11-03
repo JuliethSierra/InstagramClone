@@ -5,6 +5,7 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
+import androidx.compose.foundation.lazy.grid.items
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.BottomNavigation
@@ -12,6 +13,7 @@ import androidx.compose.material.BottomNavigationItem
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.State
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -22,9 +24,12 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.instagramclonecompose.R
+import com.example.instagramclonecompose.model.Post
+import com.example.instagramclonecompose.perentation.ui.screens.home.uistate.PostUIState
+import com.example.instagramclonecompose.perentation.ui.screens.home.uistate.StoriesUIState
 
 @Composable
-fun ProfileScreen(
+fun ProfileScreen(postModelUIState: State<PostUIState>, storiesUIState: State<StoriesUIState>,
     onHomeClick: () -> Unit
 ) {
     Scaffold(
@@ -45,7 +50,7 @@ fun ProfileScreen(
             Spacer(modifier = Modifier.height(16.dp))
             ProfileActions()
             Spacer(modifier = Modifier.height(16.dp))
-            ProfilePhotosGrid()
+            ProfilePhotosGrid(postModelUIState)
         }
     }
 }
@@ -291,7 +296,7 @@ fun ProfileActions() {
 }
 
 @Composable
-fun ProfilePhotosGrid() {
+fun ProfilePhotosGrid(postModelUIState: State<PostUIState>) {
     LazyVerticalGrid(
         columns = GridCells.Fixed(3),
         contentPadding = PaddingValues(4.dp),
@@ -299,10 +304,10 @@ fun ProfilePhotosGrid() {
             .fillMaxSize()
             .background(Color.Black)
     ) {
-        items(12) { index ->
+        items(postModelUIState.value.posts) { post ->
             Image(
-                painter = painterResource(id = R.drawable.media_photo),
-                contentDescription = "Photo $index",
+                painter = painterResource(id = post.imageUrl), // Asegúrate de que `post` tenga una propiedad `imageResource`
+                contentDescription = "Photo",
                 modifier = Modifier
                     .aspectRatio(1f)
                     .padding(2.dp),
