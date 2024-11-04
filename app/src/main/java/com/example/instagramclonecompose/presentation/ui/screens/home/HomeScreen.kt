@@ -1,4 +1,4 @@
-package com.example.instagramclonecompose.perentation.ui.screens.home
+package com.example.instagramclonecompose.presentation.ui.screens.home
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
@@ -20,8 +20,8 @@ import androidx.compose.ui.unit.dp
 import com.example.instagramclonecompose.model.Post
 import com.example.instagramclonecompose.R
 import com.example.instagramclonecompose.model.Stories
-import com.example.instagramclonecompose.perentation.ui.screens.home.uistate.PostUIState
-import com.example.instagramclonecompose.perentation.ui.screens.home.uistate.StoriesUIState
+import com.example.instagramclonecompose.presentation.ui.screens.home.uistate.PostUIState
+import com.example.instagramclonecompose.presentation.ui.screens.home.uistate.StoriesUIState
 
 @Composable
 fun HomeScreen(postModelUIState: State<PostUIState>, storiesUIState: State<StoriesUIState>, onProfileClick: () -> Unit) {
@@ -66,7 +66,7 @@ fun InstagramTopBar() {
                 style = MaterialTheme.typography.h5
             )
             Row {
-                IconButton(onClick = { /* Acción para el primer icono */ }) {
+                IconButton(onClick = {}) {
                     Icon(
                         painter = painterResource(id = R.drawable.like),
                         contentDescription = "Like",
@@ -74,7 +74,7 @@ fun InstagramTopBar() {
                         modifier = Modifier.size(20.dp)
                     )
                 }
-                IconButton(onClick = { /* Acción para el segundo icono */ }) {
+                IconButton(onClick = {  }) {
                     Icon(
                         painter = painterResource(id = R.drawable.chat),
                         contentDescription = "Message",
@@ -104,7 +104,7 @@ fun InstagramBottomBar(onProfileClick: () -> Unit) {
                 )
             },
             selected = true,
-            onClick = { /* Navegar a Home */ }
+            onClick = { }
         )
         BottomNavigationItem(
             icon = {
@@ -116,7 +116,7 @@ fun InstagramBottomBar(onProfileClick: () -> Unit) {
                 )
             },
             selected = false,
-            onClick = { /* Navegar a Búsqueda */ }
+            onClick = { }
         )
         BottomNavigationItem(
             icon = {
@@ -128,7 +128,7 @@ fun InstagramBottomBar(onProfileClick: () -> Unit) {
                 )
             },
             selected = false,
-            onClick = { /* Navegar a Add */ }
+            onClick = {  }
         )
         BottomNavigationItem(
             icon = {
@@ -140,7 +140,7 @@ fun InstagramBottomBar(onProfileClick: () -> Unit) {
                 )
             },
             selected = false,
-            onClick = { /* Navegar a Reels */ }
+            onClick = {  }
         )
         BottomNavigationItem(
             icon = {
@@ -178,11 +178,11 @@ fun StoriesRow(storiesUIState: State<StoriesUIState>) {
 @Composable
 fun StoriesItem(story: Stories) {
     Row(
-        modifier = Modifier.padding(10.dp), // Margen a la derecha entre historias
-        verticalAlignment = Alignment.CenterVertically // Alinear elementos verticalmente
+        modifier = Modifier.padding(10.dp),
+        verticalAlignment = Alignment.CenterVertically
     ) {
         Column(
-            horizontalAlignment = Alignment.CenterHorizontally // Centrar el contenido dentro de la columna
+            horizontalAlignment = Alignment.CenterHorizontally
         ) {
             Box(
                 modifier = Modifier
@@ -198,9 +198,9 @@ fun StoriesItem(story: Stories) {
                 )
             }
             Text(
-                text = story.username, // Muestra el nombre de la historia
-                color = Color.White, // Ajusta el color del texto
-                modifier = Modifier.padding(8.dp) // Margen superior entre la imagen y el texto
+                text = story.username,
+                color = Color.White,
+                modifier = Modifier.padding(8.dp)
             )
         }
 
@@ -232,13 +232,13 @@ fun PostItem(post: Post) {
             )
             Spacer(modifier = Modifier.weight(1f))
             IconButton(
-                onClick = { /* Acción del ícono extra */ },
+                onClick = {  },
                 modifier = Modifier.size(40.dp)
             ) {
                 Icon(
                     painter = painterResource(id = R.drawable.options),
                     contentDescription = "More Options",
-                    tint = Color.White, // Ícono en blanco
+                    tint = Color.White,
                     modifier = Modifier.size(20.dp)
                 )
             }
@@ -255,27 +255,27 @@ fun PostItem(post: Post) {
         )
 
         Row(modifier = Modifier.padding(vertical = 8.dp)) {
-            IconButton(onClick = { /* Acción de Me gusta */ }) {
+            IconButton(onClick = {  }) {
                 Icon(
                     painter = painterResource(id = R.drawable.like),
                     contentDescription = "Like",
-                    tint = Color.White, // Ícono en blanco
+                    tint = Color.White,
                     modifier = Modifier.size(20.dp)
                 )
             }
-            IconButton(onClick = { /* Acción de Comentar */ }) {
+            IconButton(onClick = {  }) {
                 Icon(
                     painter = painterResource(id = R.drawable.message),
                     contentDescription = "Comment",
-                    tint = Color.White, // Ícono en blanco
+                    tint = Color.White,
                     modifier = Modifier.size(24.dp)
                 )
             }
-            IconButton(onClick = { /* Acción de Compartir */ }) {
+            IconButton(onClick = {  }) {
                 Icon(
                     painter = painterResource(id = R.drawable.send),
                     contentDescription = "Share",
-                    tint = Color.White, // Ícono en blanco
+                    tint = Color.White,
                     modifier = Modifier.size(20.dp)
                 )
             }

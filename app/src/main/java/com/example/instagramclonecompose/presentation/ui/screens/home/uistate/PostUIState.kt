@@ -1,4 +1,4 @@
-package com.example.instagramclonecompose.perentation.ui.screens.home.uistate
+package com.example.instagramclonecompose.presentation.ui.screens.home.uistate
 
 import com.example.instagramclonecompose.model.Post
 

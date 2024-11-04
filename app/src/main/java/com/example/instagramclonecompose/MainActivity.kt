@@ -8,9 +8,9 @@ import androidx.compose.runtime.collectAsState
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
-import com.example.instagramclonecompose.perentation.viewmodel.PostViewModel
-import com.example.instagramclonecompose.perentation.viewmodel.StoryViewModel
-import com.example.instagramclonecompose.perentation.ui.screens.home.HomeScreen
+import com.example.instagramclonecompose.presentation.viewmodel.PostViewModel
+import com.example.instagramclonecompose.presentation.viewmodel.StoryViewModel
+import com.example.instagramclonecompose.presentation.ui.screens.home.HomeScreen
 import com.example.instagramclonecompose.presentation.ui.screens.profile.ProfileScreen
 
 import com.example.instagramclonecompose.ui.theme.InstagramCloneComposeTheme
@@ -37,25 +37,26 @@ class MainActivity : ComponentActivity() {
                     startDestination = "posts"
                 ) {
                     composable("posts") {
+                        getPosts()
+                        getStories()
                         HomeScreen(
                             postModelUIState = postsState,
                             storiesUIState = storiesState,
                             onProfileClick = {
                                 navController.navigate("Profile")
-                                getPersonalPosts()
-                                getPersonalStories()
+
                             }
                         )
                     }
 
                     composable("Profile") {
+                        getPersonalPosts()
+                        getPersonalStories()
                         ProfileScreen(
                             postModelUIState = postsState,
                             storiesUIState = storiesState,
                             onHomeClick = {
                                 navController.popBackStack()
-                                getPosts()
-                                getStories()
                             }
                         )
                     }

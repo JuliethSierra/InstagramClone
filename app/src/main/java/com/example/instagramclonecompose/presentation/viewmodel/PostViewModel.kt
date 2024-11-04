@@ -1,9 +1,9 @@
-package com.example.instagramclonecompose.perentation.viewmodel
+package com.example.instagramclonecompose.presentation.viewmodel
 
 import androidx.lifecycle.ViewModel
 import com.example.instagramclonecompose.R
 import com.example.instagramclonecompose.model.Post
-import com.example.instagramclonecompose.perentation.ui.screens.home.uistate.PostUIState
+import com.example.instagramclonecompose.presentation.ui.screens.home.uistate.PostUIState
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -171,15 +171,6 @@ class PostViewModel : ViewModel(){
                 username = "Andrea",
                 profileImage = R.drawable.profile_image,
                 imageUrl = R.drawable.my_post12,
-                description = "Descripción de la publicación 4",
-                isMyPost = true
-            )
-        )
-        postList.add(
-            Post(
-                username = "Andrea",
-                profileImage = R.drawable.profile_image,
-                imageUrl = R.drawable.my_post13,
                 description = "Descripción de la publicación 4",
                 isMyPost = true
             )

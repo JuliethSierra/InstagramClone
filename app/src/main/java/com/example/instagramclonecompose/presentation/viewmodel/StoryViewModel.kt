@@ -1,9 +1,9 @@
-package com.example.instagramclonecompose.perentation.viewmodel
+package com.example.instagramclonecompose.presentation.viewmodel
 
 import androidx.lifecycle.ViewModel
 import com.example.instagramclonecompose.R
 import com.example.instagramclonecompose.model.Stories
-import com.example.instagramclonecompose.perentation.ui.screens.home.uistate.StoriesUIState
+import com.example.instagramclonecompose.presentation.ui.screens.home.uistate.StoriesUIState
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow

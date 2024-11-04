@@ -3,13 +3,16 @@ package com.example.instagramclonecompose.presentation.ui.screens.profile
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.foundation.lazy.grid.items
 import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.BottomNavigation
 import androidx.compose.material.BottomNavigationItem
 import androidx.compose.material.MaterialTheme
@@ -28,8 +31,8 @@ import androidx.compose.ui.unit.sp
 import com.example.instagramclonecompose.R
 import com.example.instagramclonecompose.model.Post
 import com.example.instagramclonecompose.model.Stories
-import com.example.instagramclonecompose.perentation.ui.screens.home.uistate.PostUIState
-import com.example.instagramclonecompose.perentation.ui.screens.home.uistate.StoriesUIState
+import com.example.instagramclonecompose.presentation.ui.screens.home.uistate.PostUIState
+import com.example.instagramclonecompose.presentation.ui.screens.home.uistate.StoriesUIState
 
 @Composable
 fun ProfileScreen(
@@ -47,6 +50,7 @@ fun ProfileScreen(
                 .fillMaxSize()
                 .padding(paddingValues)
                 .background(Color.Black)
+                .verticalScroll(rememberScrollState())
         ) {
             ProfileHeader()
             Spacer(modifier = Modifier.height(16.dp))
@@ -54,12 +58,8 @@ fun ProfileScreen(
             Spacer(modifier = Modifier.height(16.dp))
             ProfileActions()
             Spacer(modifier = Modifier.height(16.dp))
-
-            // Agregar StoriesRow aquí antes del grid de fotos
             StoriesRow(storiesUIState = storiesUIState)
-
-            Spacer(modifier = Modifier.height(16.dp))
-            ProfilePhotosGrid(postModelUIState = postModelUIState)
+            ProfilePhotosGrid(posts = postModelUIState.value.posts)
         }
     }
 }
@@ -83,7 +83,7 @@ fun InstagramTopBar() {
                 style = MaterialTheme.typography.h5
             )
             Row {
-                androidx.compose.material.IconButton(onClick = { /* Acción para el primer icono */ }) {
+                androidx.compose.material.IconButton(onClick = {  }) {
                     androidx.compose.material.Icon(
                         painter = painterResource(id = R.drawable.add),
                         contentDescription = "add",
@@ -91,7 +91,7 @@ fun InstagramTopBar() {
                         modifier = Modifier.size(20.dp)
                     )
                 }
-                androidx.compose.material.IconButton(onClick = { /* Acción para el segundo icono */ }) {
+                androidx.compose.material.IconButton(onClick = { }) {
                     androidx.compose.material.Icon(
                         painter = painterResource(id = R.drawable.menu),
                         contentDescription = "Menu",
@@ -156,7 +156,7 @@ fun InstagramBottomBar(onHomeClick: () -> Unit) {
                 )
             },
             selected = false,
-            onClick = { /* Navegar a Búsqueda */ }
+            onClick = {  }
         )
         BottomNavigationItem(
             icon = {
@@ -168,7 +168,7 @@ fun InstagramBottomBar(onHomeClick: () -> Unit) {
                 )
             },
             selected = false,
-            onClick = { /* Navegar a Add */ }
+            onClick = {  }
         )
         BottomNavigationItem(
             icon = {
@@ -180,7 +180,7 @@ fun InstagramBottomBar(onHomeClick: () -> Unit) {
                 )
             },
             selected = false,
-            onClick = { /* Navegar a Reels */ }
+            onClick = { }
         )
         BottomNavigationItem(
             icon = {
@@ -256,11 +256,11 @@ fun ProfileActions() {
         horizontalArrangement = Arrangement.SpaceEvenly
     ) {
         Button(
-            onClick = { /* Acción de Editar Perfil */ },
+            onClick = {  },
             modifier = Modifier
                 .width(170.dp)
                 .height(35.dp)
-                .clip(RoundedCornerShape(0.dp)), // Bordes menos redondeados
+                .clip(RoundedCornerShape(0.dp)),
             colors = ButtonDefaults.buttonColors(
                 Color.DarkGray,
                 contentColor = Color.White
@@ -270,11 +270,11 @@ fun ProfileActions() {
         }
         Spacer(modifier = Modifier.width(5.dp))
         Button(
-            onClick = { /* Acción de Promocionar */ },
+            onClick = {  },
             modifier = Modifier
                 .width(170.dp)
                 .height(35.dp)
-                .clip(RoundedCornerShape(0.dp)), // Bordes menos redondeados
+                .clip(RoundedCornerShape(0.dp)),
             colors = ButtonDefaults.buttonColors(
                 Color.DarkGray,
                 contentColor = Color.White
@@ -284,18 +284,18 @@ fun ProfileActions() {
         }
         Spacer(modifier = Modifier.width(5.dp))
         Button(
-            onClick = { /* Acción de Información */ },
+            onClick = { },
             modifier = Modifier
                 .width(45.dp)
                 .height(35.dp)
-                .clip(RoundedCornerShape(0.dp)), // Bordes menos redondeados
+                .clip(RoundedCornerShape(0.dp)),
             colors = ButtonDefaults.buttonColors(
                 Color.DarkGray,
                 contentColor = Color.White
             )
         ) {
             Icon(
-                painter = painterResource(id = R.drawable.add_profile), // Reemplaza con tu icono
+                painter = painterResource(id = R.drawable.add_profile),
                 contentDescription = "Info Icon",
                 modifier = Modifier.size(100.dp),
                 tint = Color.White
@@ -316,11 +316,11 @@ fun StoriesRow(storiesUIState: State<StoriesUIState>) {
 @Composable
 fun StoriesItem(story: Stories) {
     Row(
-        modifier = Modifier.padding(10.dp), // Margen a la derecha entre historias
-        verticalAlignment = Alignment.CenterVertically // Alinear elementos verticalmente
+        modifier = Modifier.padding(10.dp),
+        verticalAlignment = Alignment.CenterVertically
     ) {
         Column(
-            horizontalAlignment = Alignment.CenterHorizontally // Centrar el contenido dentro de la columna
+            horizontalAlignment = Alignment.CenterHorizontally
         ) {
             Box(
                 modifier = Modifier
@@ -336,17 +336,19 @@ fun StoriesItem(story: Stories) {
                 )
             }
             androidx.compose.material.Text(
-                text = story.username, // Muestra el nombre de la historia
-                color = Color.White, // Ajusta el color del texto
-                modifier = Modifier.padding(8.dp) // Margen superior entre la imagen y el texto
+                text = story.username,
+                color = Color.White,
+                modifier = Modifier.padding(8.dp)
             )
         }
 
     }
 }
 
-@Composable
-fun ProfilePhotosGrid(postModelUIState: State<PostUIState>) {
+//Preguntar en clase por el LazyVerticalGrid
+
+/*@Composable
+fun ProfilePhotosGridd(postModelUIState: State<PostUIState>) {
     LazyVerticalGrid(
         columns = GridCells.Fixed(3),
         contentPadding = PaddingValues(4.dp),
@@ -356,13 +358,42 @@ fun ProfilePhotosGrid(postModelUIState: State<PostUIState>) {
     ) {
         items(postModelUIState.value.posts) { post ->
             Image(
-                painter = painterResource(id = post.imageUrl), // Asegúrate de que `post` tenga una propiedad `imageResource`
+                painter = painterResource(id = post.imageUrl),
                 contentDescription = "Photo",
                 modifier = Modifier
                     .aspectRatio(1f)
                     .padding(2.dp),
                 contentScale = ContentScale.Crop
             )
+        }
+    }
+}*/
+
+@Composable
+fun ProfilePhotosGrid(posts: List<Post>) {
+    Column(
+        modifier = Modifier
+            .fillMaxWidth()
+            .background(Color.Black)
+    ) {
+        for (i in posts.indices step 3) {
+            Row(
+                modifier = Modifier.fillMaxWidth()
+            ) {
+                for (j in 0 until 3) {
+                    if (i + j < posts.size) {
+                        Image(
+                            painter = painterResource(id = posts[i + j].imageUrl),
+                            contentDescription = "Photo",
+                            modifier = Modifier
+                                .aspectRatio(1f)
+                                .weight(1f)
+                                .padding(1.dp),
+                            contentScale = ContentScale.Crop
+                        )
+                    }
+                }
+            }
         }
     }
 }
