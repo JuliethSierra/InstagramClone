@@ -34,7 +34,7 @@ import com.example.instagramclonecompose.model.Stories
 import com.example.instagramclonecompose.presentation.ui.screens.home.uistate.PostUIState
 import com.example.instagramclonecompose.presentation.ui.screens.home.uistate.StoriesUIState
 
-@Composable
+/*@Composable
 fun ProfileScreen(
     postModelUIState: State<PostUIState>,
     storiesUIState: State<StoriesUIState>,
@@ -60,6 +60,55 @@ fun ProfileScreen(
             Spacer(modifier = Modifier.height(16.dp))
             StoriesRow(storiesUIState = storiesUIState)
             ProfilePhotosGrid(posts = postModelUIState.value.posts)
+        }
+    }
+}*/
+
+@Composable
+fun ProfileScreen(
+    postModelUIState: State<PostUIState>,
+    storiesUIState: State<StoriesUIState>,
+    onHomeClick: () -> Unit
+) {
+    Scaffold(
+        topBar = { InstagramTopBar() },
+        bottomBar = { InstagramBottomBar(onHomeClick) },
+        modifier = Modifier.background(Color.Black)
+    ) { paddingValues ->
+        LazyColumn(
+            modifier = Modifier
+                .fillMaxSize()
+                .padding(paddingValues)
+                .background(Color.Black)
+                .verticalScroll(rememberScrollState())
+        ) {
+  /*          item{
+                ProfileHeader()
+                Spacer(modifier = Modifier.height(16.dp))
+            }
+            item{
+                ProfileDetails()
+                Spacer(modifier = Modifier.height(16.dp))
+            }
+            item{
+
+                ProfileActions()
+                Spacer(modifier = Modifier.height(16.dp))
+            }
+            item{
+                StoriesRow(storiesUIState = storiesUIState)
+            }*/
+            items(postModelUIState.value.posts){
+                Image(
+                    painter = painterResource(id = it.imageUrl),
+                    contentDescription = "Photo",
+                    modifier = Modifier
+                        .aspectRatio(1f)
+                        .padding(2.dp),
+                    contentScale = ContentScale.Crop
+                )
+            }
+
         }
     }
 }
@@ -347,8 +396,8 @@ fun StoriesItem(story: Stories) {
 
 //Preguntar en clase por el LazyVerticalGrid
 
-/*@Composable
-fun ProfilePhotosGridd(postModelUIState: State<PostUIState>) {
+@Composable
+fun ProfilePhotosGrid(postModelUIState: State<PostUIState>) {
     LazyVerticalGrid(
         columns = GridCells.Fixed(3),
         contentPadding = PaddingValues(4.dp),
@@ -367,9 +416,9 @@ fun ProfilePhotosGridd(postModelUIState: State<PostUIState>) {
             )
         }
     }
-}*/
+}
 
-@Composable
+/*@Composable
 fun ProfilePhotosGrid(posts: List<Post>) {
     Column(
         modifier = Modifier
@@ -396,4 +445,4 @@ fun ProfilePhotosGrid(posts: List<Post>) {
             }
         }
     }
-}
+}*/
