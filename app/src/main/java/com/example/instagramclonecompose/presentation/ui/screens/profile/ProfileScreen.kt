@@ -22,19 +22,22 @@ import androidx.compose.runtime.State
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.focus.FocusRequester.Companion.createRefs
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.constraintlayout.compose.ConstraintLayout
 import com.example.instagramclonecompose.R
 import com.example.instagramclonecompose.model.Post
 import com.example.instagramclonecompose.model.Stories
 import com.example.instagramclonecompose.presentation.ui.screens.home.uistate.PostUIState
 import com.example.instagramclonecompose.presentation.ui.screens.home.uistate.StoriesUIState
 
-/*@Composable
+
+@Composable
 fun ProfileScreen(
     postModelUIState: State<PostUIState>,
     storiesUIState: State<StoriesUIState>,
@@ -60,55 +63,6 @@ fun ProfileScreen(
             Spacer(modifier = Modifier.height(16.dp))
             StoriesRow(storiesUIState = storiesUIState)
             ProfilePhotosGrid(posts = postModelUIState.value.posts)
-        }
-    }
-}*/
-
-@Composable
-fun ProfileScreen(
-    postModelUIState: State<PostUIState>,
-    storiesUIState: State<StoriesUIState>,
-    onHomeClick: () -> Unit
-) {
-    Scaffold(
-        topBar = { InstagramTopBar() },
-        bottomBar = { InstagramBottomBar(onHomeClick) },
-        modifier = Modifier.background(Color.Black)
-    ) { paddingValues ->
-        LazyColumn(
-            modifier = Modifier
-                .fillMaxSize()
-                .padding(paddingValues)
-                .background(Color.Black)
-                .verticalScroll(rememberScrollState())
-        ) {
-  /*          item{
-                ProfileHeader()
-                Spacer(modifier = Modifier.height(16.dp))
-            }
-            item{
-                ProfileDetails()
-                Spacer(modifier = Modifier.height(16.dp))
-            }
-            item{
-
-                ProfileActions()
-                Spacer(modifier = Modifier.height(16.dp))
-            }
-            item{
-                StoriesRow(storiesUIState = storiesUIState)
-            }*/
-            items(postModelUIState.value.posts){
-                Image(
-                    painter = painterResource(id = it.imageUrl),
-                    contentDescription = "Photo",
-                    modifier = Modifier
-                        .aspectRatio(1f)
-                        .padding(2.dp),
-                    contentScale = ContentScale.Crop
-                )
-            }
-
         }
     }
 }
@@ -155,28 +109,71 @@ fun InstagramTopBar() {
 
 @Composable
 fun ProfileHeader() {
-    Row(
-        verticalAlignment = Alignment.CenterVertically,
-        horizontalArrangement = Arrangement.SpaceBetween,
+    ConstraintLayout(
         modifier = Modifier
             .fillMaxWidth()
             .padding(horizontal = 16.dp, vertical = 8.dp)
             .background(Color.Black)
     ) {
+        val (profileImage, posts, followers, following) = createRefs()
+
         Image(
             painter = painterResource(id = R.drawable.profile_image),
             contentDescription = "Profile Picture",
             modifier = Modifier
                 .size(80.dp)
-                .clip(CircleShape),
+                .clip(CircleShape)
+                .constrainAs(profileImage) {
+                    start.linkTo(parent.start)
+                    top.linkTo(parent.top)
+                    bottom.linkTo(parent.bottom)
+                },
             contentScale = ContentScale.Crop
         )
-        ProfileStat("45", "Posts")
-        ProfileStat("239", "followers")
-        ProfileStat("263", "following")
+
+        ProfileStat(
+            count = "45",
+            label = "Posts",
+            modifier = Modifier.constrainAs(posts) {
+                start.linkTo(profileImage.end, margin = 40.dp)
+                top.linkTo(profileImage.top)
+                bottom.linkTo(profileImage.bottom)
+            }
+        )
+
+        ProfileStat(
+            count = "239",
+            label = "Followers",
+            modifier = Modifier.constrainAs(followers) {
+                start.linkTo(posts.end, margin = 40.dp)
+                top.linkTo(posts.top)
+                bottom.linkTo(posts.bottom)
+            }
+        )
+
+        ProfileStat(
+            count = "263",
+            label = "Following",
+            modifier = Modifier.constrainAs(following) {
+                start.linkTo(followers.end, margin = 20.dp)
+                top.linkTo(followers.top)
+                bottom.linkTo(followers.bottom)
+                end.linkTo(parent.end)
+            }
+        )
     }
 }
 
+@Composable
+fun ProfileStat(count: String, label: String, modifier: Modifier = Modifier) {
+    Column(
+        horizontalAlignment = Alignment.CenterHorizontally,
+        modifier = modifier
+    ) {
+        Text(text = count, color = Color.White, fontSize = 18.sp, fontWeight = FontWeight.Bold)
+        Text(text = label, color = Color.Gray, fontSize = 14.sp)
+    }
+}
 @Composable
 fun InstagramBottomBar(onHomeClick: () -> Unit) {
     BottomNavigation(
@@ -249,27 +246,6 @@ fun InstagramBottomBar(onHomeClick: () -> Unit) {
             },
             selected = false,
             onClick = { }
-        )
-    }
-}
-
-@Composable
-fun ProfileStat(count: String, label: String) {
-    Column(
-        horizontalAlignment = Alignment.CenterHorizontally,
-        modifier = Modifier
-            .padding(horizontal = 8.dp)
-            .background(Color.Black)
-    ) {
-        Text(
-            text = count,
-            fontWeight = FontWeight.Bold,
-            fontSize = 18.sp
-        )
-        Text(
-            text = label,
-            fontSize = 14.sp,
-            color = Color.Gray
         )
     }
 }
@@ -394,31 +370,8 @@ fun StoriesItem(story: Stories) {
     }
 }
 
-//Preguntar en clase por el LazyVerticalGrid
 
 @Composable
-fun ProfilePhotosGrid(postModelUIState: State<PostUIState>) {
-    LazyVerticalGrid(
-        columns = GridCells.Fixed(3),
-        contentPadding = PaddingValues(4.dp),
-        modifier = Modifier
-            .fillMaxSize()
-            .background(Color.Black)
-    ) {
-        items(postModelUIState.value.posts) { post ->
-            Image(
-                painter = painterResource(id = post.imageUrl),
-                contentDescription = "Photo",
-                modifier = Modifier
-                    .aspectRatio(1f)
-                    .padding(2.dp),
-                contentScale = ContentScale.Crop
-            )
-        }
-    }
-}
-
-/*@Composable
 fun ProfilePhotosGrid(posts: List<Post>) {
     Column(
         modifier = Modifier
@@ -445,4 +398,5 @@ fun ProfilePhotosGrid(posts: List<Post>) {
             }
         }
     }
-}*/
+}
+
